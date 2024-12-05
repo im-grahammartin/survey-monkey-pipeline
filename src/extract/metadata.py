@@ -17,4 +17,9 @@ def saveExtractMetadata(surveyId, metadata):
 
 def getExtractMetadata(surveyId):
     filePath = f'datalake/survey_{surveyId}/metadata.json'
-    return readFromDatalake(filePath)
+    metadata = readFromDatalake(filePath)
+
+    if metadata:
+        return metadata
+    else:
+        return { 'start': None, 'response_count': 0 }

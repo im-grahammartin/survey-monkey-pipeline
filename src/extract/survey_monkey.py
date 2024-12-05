@@ -2,7 +2,7 @@ import math
 import logging
 
 from datetime import datetime, timezone
-from extract.data_lake import saveToDataLake, clearExistingResponses, deleteResponseFromDataLake, checkForDataLakeFile, getResponseDetails
+from extract.data_lake import saveToDataLake, clearExistingResponses, deleteResponseFromDataLake, checkForDataLakeFile, getResponseDetailIDs
 from extract.metadata import getExtractMetadata, saveExtractMetadata
 from extract.survey_monkey_api import apiSurveyDetails, apiSurveyResponsesBulk, apiSurveyResponseDetails, apiPageSize
 
@@ -121,7 +121,7 @@ def surveyMonkey(surveyId):
     previousExtractMetadata = getExtractMetadata(surveyId)
     startTime = datetime.now(timezone.utc)
     clearExistingResponses(surveyId)
-    existingResponses = getResponseDetails(surveyId)
+    existingResponses = getResponseDetailIDs(surveyId)
 
     # Get survey questions
     details = surveyDetails(surveyId)
@@ -142,7 +142,7 @@ def surveyMonkey(surveyId):
     responsesUpdatedCount = getSurveyResponseDetailsBatch(surveyId, responsesToUpdate)
 
     # Validate total number of records is as expected
-    newResultCount = len(getResponseDetails(surveyId))
+    newResultCount = len(getResponseDetailIDs(surveyId))
     validateFinalResults(newResultCount, details['response_count'])
 
     # Save metadata about this pipeline execution    
@@ -158,6 +158,6 @@ def surveyMonkey(surveyId):
         'responses_added': responsesToAdd,
         'responses_updated': responsesToUpdate,
         'responses_deleted': deletedResponses['ids'],
-        'response_ids': getResponseDetails(surveyId)
+        'response_ids': getResponseDetailIDs(surveyId)
     }
     saveExtractMetadata(surveyId, metadata)

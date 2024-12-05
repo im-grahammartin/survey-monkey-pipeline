@@ -20,13 +20,14 @@ def saveToDataLake(dir_name, file_name, data):
 
 def readFromDatalake(filePath):
     if os.path.exists(filePath):
-        metadataFile = open(filePath, 'r')
-        metadata = metadataFile.read()
-        metadataFile.close()
-        return json.loads(metadata)
+        file = open(filePath, 'r')
+        fileContent = file.read()
+        file.close()
+        logging.info(f'File {filePath} read from data lake')
+        return json.loads(fileContent)
     else:
-        logging.warning('No prior metadata found')
-        return { 'start': None }
+        logging.warning('No file found in data lake')
+        return False
 
 def clearExistingResponses(surveyId):
     folder_path = f'datalake/survey_{surveyId}/responses'
@@ -37,7 +38,7 @@ def clearExistingResponses(surveyId):
         except:
             logging.error('Unable to clear historic response summary data')
     else:
-        logging.warn(f'No exisiting responses saved to {folder_path}. Skipping the cleaning step')
+        logging.warning(f'No exisiting responses saved to {folder_path}. Skipping the cleaning step')
 
 def deleteResponseFromDataLake(surveyId, responseId):
     filePath = f'datalake/survey_{surveyId}/responses_details/response_{responseId}.json'
@@ -48,15 +49,22 @@ def deleteResponseFromDataLake(surveyId, responseId):
         logging.error(f'File {filePath} not found')
 
 def getResponseDetails(surveyId):
-    existingResponseIds = []
+    existingResponseFiles = []
     existingResponsesPath = f'datalake/survey_{surveyId}/responses_details'
     if os.path.exists(existingResponsesPath):
         existingResponseDetails = os.listdir(existingResponsesPath)
-    
         for responseDetailsFile in existingResponseDetails:
-            existingResponseIds.append(responseDetailsFile.replace('response_','').replace('.json','')) # Extract ID from file name
+            existingResponseFiles.append(f'{existingResponsesPath}/{responseDetailsFile}')
     else:
         logging.warning(f'No existing records found at ${existingResponsesPath}')
+
+    return existingResponseFiles
+
+def getResponseDetailIDs(surveyId):
+    responseDetailsFiles = getResponseDetails(surveyId)
+    existingResponseIds = []
+    for responseDetailsFile in responseDetailsFiles:
+            existingResponseIds.append(responseDetailsFile.split('/')[-1].replace('response_','').replace('.json','')) # Extract ID from file name
 
     return existingResponseIds
 
