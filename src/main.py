@@ -9,7 +9,6 @@ from modules.normalize import transformToNormalizedDb
 from modules.survey_transforms.mfm_transforms import transformMfmTesters, mfmColumns
 from modules.validate import validatePipelineRun
 
-# surveyId = '416262167' # Graham test
 surveyId = '314840976' # MFM data
 
 def main():
