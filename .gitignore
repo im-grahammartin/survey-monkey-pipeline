@@ -165,6 +165,8 @@ cython_debug/
 
 # File storage – exclude /datelake folder used to store date extracts
 /datalake
+/output
+/logs
 
 # Environment
 /survey-monkey

@@ -5,7 +5,7 @@ import logging
 from os import getenv
 from dotenv import load_dotenv
 
-load_dotenv()
+load_dotenv(override=True)
 
 apiBase = getenv('SURVEY_MONKEY_API_BASE')
 pageSize = 50

@@ -2,9 +2,9 @@ import math
 import logging
 
 from datetime import datetime, timezone
-from extract.data_lake import saveToDataLake, clearExistingResponses, deleteResponseFromDataLake, checkForDataLakeFile, getResponseDetailIDs
-from extract.metadata import getExtractMetadata, saveExtractMetadata
-from extract.survey_monkey_api import apiSurveyDetails, apiSurveyResponsesBulk, apiSurveyResponseDetails, apiPageSize
+from modules.data_lake import saveToDataLake, clearExistingResponses, deleteResponseFromDataLake, checkForDataLakeFile, getResponseDetailIDs
+from modules.metadata import getExtractMetadata, saveExtractMetadata
+from modules.survey_monkey_api import apiSurveyDetails, apiSurveyResponsesBulk, apiSurveyResponseDetails, apiPageSize
 
 def surveyDetails(surveyId): 
     survey = apiSurveyDetails(surveyId)
