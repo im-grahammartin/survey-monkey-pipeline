@@ -136,4 +136,4 @@ def transformMfmTesters(surveyId):
  
     logging.info(f'Finish MFM transformations to survey data for {surveyId}')
 
-    return transformed 
+    return transformed

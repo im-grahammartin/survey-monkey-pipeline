@@ -2,9 +2,8 @@ import logging
 from modules.postgres import postgresConnection
 from sqlalchemy import text
 
-engine = postgresConnection()
-
 def runSQL(query):    
+    engine = postgresConnection()
     with engine.connect() as conn:
 
         try:
@@ -78,10 +77,3 @@ def getSurveyResponseAnswers(surveyId, responseId):
         AND responses."Survey ID" = '{surveyId}'
         ORDER BY questions."Position" ASC, rows."Position" ASC, choices."Position" ASC
     """)
-
-# ,
-#             metadata."Metadata Key",
-#             metadata."Metadata Value"
-
-# LEFT JOIN metadata
-#         ON responses."Response ID" = metadata."Response ID"

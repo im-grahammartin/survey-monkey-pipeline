@@ -1,6 +1,6 @@
 import logging
 
-from modules.data_lake import saveToDataLake, readFromDatalake
+from modules.dataLake import saveToDataLake, readFromDatalake
 
 def saveExtractMetadata(surveyId, metadata):
     saveToDataLake(f'survey_{surveyId}/', f'extract_metadata', metadata)

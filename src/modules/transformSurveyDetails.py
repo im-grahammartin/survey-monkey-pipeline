@@ -1,5 +1,5 @@
 import logging
-from modules.data_lake import readFromDatalake
+from modules.dataLake import readFromDatalake
 from modules.postgres import postgresConnection, postgresSession
 from modules.postgresSchema import Surveys, Pages, Choices, Row, Questions
 

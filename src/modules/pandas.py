@@ -29,6 +29,6 @@ def pandasLoad(rows, columns):
     df = loadToDataframe(rows, columns)
     pandasToCSV(df)
     pandasToJSON(df)
-    pandasToExcel(df)
+    pandasToExcel(df) 
 
     return df

@@ -1,6 +1,6 @@
 import logging
 
-from modules.data_lake import getResponseDetails
+from modules.dataLake import getResponseDetails
 from modules.metadata import getExtractMetadata
 from modules.postgres import postgresConnection, postgresSession
 from modules.transformSurveyDetails import transformSurveyDetails

@@ -2,7 +2,7 @@ import math
 import logging
 
 from datetime import datetime, timezone
-from modules.data_lake import saveToDataLake, clearExistingResponses, deleteResponseFromDataLake, checkForDataLakeFile, getResponseDetailIDs
+from modules.dataLake import saveToDataLake, clearExistingResponses, deleteResponseFromDataLake, checkForDataLakeFile, getResponseDetailIDs
 from modules.metadata import getExtractMetadata, saveExtractMetadata
 from modules.survey_monkey_api import apiSurveyDetails, apiSurveyResponsesBulk, apiSurveyResponseDetails, apiPageSize
 
