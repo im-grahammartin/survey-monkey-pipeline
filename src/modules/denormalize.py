@@ -1,9 +1,11 @@
 import logging
 
 from modules.sqlSelects import getSurveyQuestions, getSurveyResponses, getSurveyResponseAnswers
+from modules.postgres import postgresConnection
 
 def columnNames(surveyId):
-    questions = getSurveyQuestions(surveyId)
+    engine = postgresConnection()
+    questions = getSurveyQuestions(surveyId, engine)
 
     columnDict = { 'Response ID': 'Response ID' }
 
@@ -27,15 +29,16 @@ def getAnswerFromAnswer(answer):
     return formattedAnswer
     
 def transformToDenormalizedDb(surveyId):
+    engine = postgresConnection()
     logging.info(f'Start denormalising survey data for {surveyId}')
 
-    responses = getSurveyResponses(surveyId)
+    responses = getSurveyResponses(surveyId, engine)
 
     denormalizedData = []
     
     for response in responses:
         responseDict = {}
-        answers = getSurveyResponseAnswers(surveyId, response[0])
+        answers = getSurveyResponseAnswers(surveyId, response[0], engine)
         responseDict['Response ID'] = response[0]
 
         for answer in answers:

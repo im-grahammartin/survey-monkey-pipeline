@@ -2,20 +2,25 @@ import logging
 from modules.postgres import postgresConnection
 from sqlalchemy import text
 
-def runSQL(query):    
-    engine = postgresConnection()
+def runSQL(query, engine=None):
+    if engine is None:
+        engine = postgresConnection()
+    
     with engine.connect() as conn:
 
         try:
             result = conn.execute(text(query))    
             result = [r for r in result]
 
+            conn.close()
             return result
         
         except Exception as e:
             logging.error(f'SQL Error retrieving data from database. {e}')
 
-def getSurveyQuestions(surveyId):
+    engine.dispose()
+
+def getSurveyQuestions(surveyId, engine=None):
     logging.debug(f'Getting survey questions for survey {surveyId}')
 
     return runSQL(f"""
@@ -30,9 +35,9 @@ def getSurveyQuestions(surveyId):
         WHERE pages."Survey ID" = '{surveyId}'
             AND questions."Visible" = TRUE 
         ORDER BY pages."Position" ASC, questions."Position" ASC
-    """)
+    """, engine)
 
-def getSurveyResponses(surveyId):
+def getSurveyResponses(surveyId, engine=None):
     logging.debug(f'Getting survey responses for survey {surveyId}')
 
     return runSQL(f"""
@@ -40,9 +45,9 @@ def getSurveyResponses(surveyId):
             responses."Response ID"
         FROM responses
         WHERE responses."Survey ID" = '{surveyId}'
-    """)
+    """, engine)
 
-def getSurveyResponseAnswers(surveyId, responseId):
+def getSurveyResponseAnswers(surveyId, responseId, engine=None):
     logging.debug(f'Getting survey response answers for survey {surveyId}, response {responseId}')
 
     return runSQL(f"""
@@ -76,4 +81,4 @@ def getSurveyResponseAnswers(surveyId, responseId):
         WHERE responses."Response ID" = '{responseId}'
         AND responses."Survey ID" = '{surveyId}'
         ORDER BY questions."Position" ASC, rows."Position" ASC, choices."Position" ASC
-    """)
+    """, engine)
