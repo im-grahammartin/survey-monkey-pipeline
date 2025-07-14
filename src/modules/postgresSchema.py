@@ -104,7 +104,7 @@ class ResponseMetaData(Base):
     metadataId = Column("Metadata ID", Integer, primary_key=True)
     responseId = Column("Response ID", String(20), ForeignKey('responses.Response ID'))
     metadataKey = Column("Metadata Key", String(100))
-    metadataValue = Column("Metadata Value", String(250))
+    metadataValue = Column("Metadata Value", String(500))
 
     def __repr__(self):
         return f'Metadata ID {self.metadataId}'

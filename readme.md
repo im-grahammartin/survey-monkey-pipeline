@@ -22,11 +22,11 @@ This pipeline is used to extract survey data from the Survey Monkey API. It uses
 
 ## Quick start
 1. Clone this repository to your local system
-2. _(Optional)_ Create a virtual environment using `python -m venv survey-monkey-pipeline`, starting it with `source/survey-monkey-pipeline/bin/activate`
-Install project dependencies using `pip install -r requirements.txt`
-3. Set your enviriables
-4. Set `surveyId` in `/main.py`
-5. Run `python src/main.py` (or use the included Jupyter Notebook)
+2. _(Optional)_ Create a virtual environment using `python -m venv survey-monkey-pipeline`, starting it with `source /survey-monkey-pipeline/bin/activate`
+3. Install project dependencies using `pip install -r requirements.txt`
+4. Set your enviriables
+5. Set `surveyId` in `/main.py`
+6. Run `python src/main.py` (or use the included Jupyter Notebook)
 
 ## Environment variables
 The following can be used to start your `.env` file containing credentials both for Survey Monkey and your database.
